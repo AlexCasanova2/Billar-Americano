@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class DestroyObjects : MonoBehaviour
 {
     protected GameManager gameManager;
     protected PlayersPanel playersPanel;
+
+    public GameObject player1BallType;
+    public GameObject player2BallType;
+
     bool player1FirstBall;
     bool player2FirstBall;
     bool player1Smooth, player1Striped;
@@ -22,6 +23,28 @@ public class DestroyObjects : MonoBehaviour
         player2FirstBall = true;
     }
 
+    private void Update()
+    {
+        UpdateUI();
+    }
+
+    public void UpdateUI()
+    {
+        if (player1Smooth && player2Striped)
+        {
+            player1BallType.SetActive(true);
+            player2BallType.SetActive(true);
+            playersPanel.SetPlayer1BallType("Smooth");
+            playersPanel.SetPlayer2BallType("Stripped");
+        }
+        if (player1Striped && player2Smooth)
+        {
+            player1BallType.SetActive(true);
+            player2BallType.SetActive(true);
+            playersPanel.SetPlayer1BallType("Stripped");
+            playersPanel.SetPlayer2BallType("Smooth");
+        }
+    }
 
     //Logica del juego para contabilizar puntos mediante las normas del billar 
     private void OnTriggerEnter(Collider other)
